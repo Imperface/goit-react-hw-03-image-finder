@@ -1,0 +1,12 @@
+.form {
+  padding: 50px;
+  display: flex;
+  justify-content: center;
+  column-gap: 40px;
+}
+.button {
+  display: block;
+  width: 60px;
+  height: 30px;
+  cursor: pointer;
+}

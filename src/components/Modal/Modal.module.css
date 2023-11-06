@@ -1,0 +1,22 @@
+.backdrop {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: #000000cc;
+  cursor: pointer;
+}
+
+.modal {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  max-width: 600px;
+  max-height: 600px;
+  display: flex;
+  transform: translate(-50%, -50%);
+  cursor: auto;
+  border-radius: 20px;
+  overflow: hidden;
+}
