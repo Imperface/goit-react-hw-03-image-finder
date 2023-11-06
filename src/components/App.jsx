@@ -88,6 +88,7 @@ export class App extends Component {
 
       // update state with new dataImage
       this.updateImgData(data);
+      return;
     }
 
     // check is page changed
@@ -103,6 +104,7 @@ export class App extends Component {
 
       // spread new hits to old data
       this.setState({ imgData: [...this.state.imgData, ...dataHits] });
+      return;
     }
   };
 
