@@ -1,5 +1,6 @@
 import { SearchForm } from 'components';
 import { Component } from 'react';
+import css from './SearchBar.module.css';
 
 export class SearchBar extends Component {
   onSearchFormSubmit = e => {
@@ -11,12 +12,14 @@ export class SearchBar extends Component {
   };
   render() {
     return (
-      <SearchForm
-        inputType="text"
-        inputName="searchQuery"
-        buttonType="submit"
-        onSearchFormSubmit={this.onSearchFormSubmit}
-      />
+      <div className={css.searchBar}>
+        <SearchForm
+          inputType="text"
+          inputName="searchQuery"
+          buttonType="submit"
+          onSearchFormSubmit={this.onSearchFormSubmit}
+        />
+      </div>
     );
   }
   // return <header>{children}</header>;

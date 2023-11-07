@@ -1,8 +1,8 @@
 import { ImageGalleryItem } from 'components';
-
+import css from './ImageGallery.module.css';
 export const ImageGallery = ({ imagesData, onGalleryItemClick }) => {
   return (
-    <ul onClick={onGalleryItemClick}>
+    <ul className={css.imageGallery} onClick={onGalleryItemClick}>
       {imagesData.map(item => (
         <ImageGalleryItem
           imageURL={item.webformatURL}

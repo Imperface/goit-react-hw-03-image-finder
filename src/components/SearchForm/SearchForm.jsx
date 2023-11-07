@@ -1,4 +1,5 @@
 import css from './SearchForm.module.css';
+import { FiSearch } from 'react-icons/fi';
 export const SearchForm = ({
   onSearchFormSubmit,
   inputType,
@@ -7,8 +8,16 @@ export const SearchForm = ({
 }) => {
   return (
     <form className={css.form} onSubmit={onSearchFormSubmit}>
-      <input type={inputType} name={inputName} required />
-      <button className={css.button} type={buttonType}></button>
+      <button className={css.button} type={buttonType}>
+        <FiSearch />
+      </button>
+      <input
+        className={css.input}
+        placeholder="Search images and photos"
+        type={inputType}
+        name={inputName}
+        required
+      />
     </form>
   );
 };

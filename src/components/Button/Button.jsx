@@ -1,6 +1,7 @@
-export const Button = ({ text, type, callback }) => {
+import css from './Button.module.css';
+export const Button = ({ text, type, onLoadMoreClick }) => {
   return (
-    <button type={type} onClick={callback}>
+    <button className={css.button} onClick={onLoadMoreClick} type={type}>
       {text}
     </button>
   );

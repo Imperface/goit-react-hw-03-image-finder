@@ -24,6 +24,7 @@ export class Modal extends Component {
       <div className={css.backdrop} onClick={this.onBackdropClick}>
         <div className={css.modal}>
           <img
+            className={css.image}
             src={this.props.modalData.largeURL}
             alt={this.props.modalData.tags}
           />

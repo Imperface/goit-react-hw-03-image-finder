@@ -1,5 +1,8 @@
-import { SearchBar, ImageGallery, Modal } from 'components';
+import { SearchBar, ImageGallery, Modal, Button } from 'components';
 import { Component } from 'react';
+import { Notify } from 'notiflix';
+import { ColorRing } from 'react-loader-spinner';
+import css from './App.module.css';
 
 export class App extends Component {
   state = {
@@ -65,7 +68,8 @@ export class App extends Component {
       this.setState({
         loadMore: false,
       });
-      console.log('amount of pages <= 1 or current page > amount of pages ');
+
+      // console.log('amount of pages <= 1 or current page > amount of pages ');
       return;
     }
     this.setState({
@@ -76,16 +80,25 @@ export class App extends Component {
   componentDidUpdate = async (_, prevState) => {
     // check is searchQuery changed
     if (this.state.searchQuery !== prevState.searchQuery) {
-      console.log('Update dataImages in state');
+      // console.log('Update dataImages in state');
 
       // reset page counter when entered new search query
       this.setState({ page: 1 });
 
       // fetch new dataImage
       const data = await this.fetchDataBySearchQuery(this.state.searchQuery);
-      console.log(data);
       this.checkHits(data.totalHits, 12);
 
+      if (data.totalHits === 0) {
+        Notify.failure('Nothing was found for your request');
+      } else {
+        Notify.success(
+          `${data.totalHits} ${
+            // check singular or plural
+            data.totalHits === 1 ? 'image was' : 'images were'
+          } found for your query`
+        );
+      }
       // update state with new dataImage
       this.updateImgData(data);
       return;
@@ -93,7 +106,8 @@ export class App extends Component {
 
     // check is page changed
     if (this.state.page !== prevState.page) {
-      console.log('Next page');
+      // console.log('Next page');
+
       const data = await this.fetchDataBySearchQuery();
 
       // check amount of hits in fetch, if > 12 show loadMore btn
@@ -121,14 +135,13 @@ export class App extends Component {
 
   openModal = (largeURL, tags) => {
     // console.log('Modal opened successfully');
-    // open modal and
     this.setState({
       modalIsOpen: true,
       modalData: { largeURL, tags },
     });
   };
   closeModal = () => {
-    console.log('Modal closed successfully');
+    // console.log('Modal closed successfully');
     this.setState({
       modalIsOpen: false,
       modalData: null,
@@ -146,6 +159,7 @@ export class App extends Component {
     }
     const largeImageURL = imageGalleryItemRef.getAttribute('data');
     const largeImageTags = imageGalleryItemRef.getAttribute('tags');
+    // get data from li atributes
     this.openModal(largeImageURL, largeImageTags);
   };
 
@@ -158,7 +172,7 @@ export class App extends Component {
 
   render() {
     return (
-      <>
+      <div className={css.app}>
         <SearchBar setSearchQuery={this.setSearchQuery} />
         {this.state.error !== null && (
           <p>Some error. Error message: {this.state.error}</p>
@@ -170,19 +184,33 @@ export class App extends Component {
           />
         )}
 
-        {this.state.loader && <p>Loading. Please wait...</p>}
-        {this.state.loadMore && (
-          <button onClick={this.onLoadMoreClick} type="button">
-            Load More
-          </button>
+        {this.state.loader && (
+          <ColorRing
+            visible={true}
+            height="100"
+            width="100"
+            ariaLabel="blocks-loading"
+            wrapperStyle={{}}
+            wrapperClass={css.blocksWrapper}
+            colors={['#e15b64', '#f47e60', '#f8b26a', '#abbd81', '#849b87']}
+          />
         )}
+
+        {this.state.loadMore && (
+          <Button
+            onLoadMoreClick={this.onLoadMoreClick}
+            type="button"
+            text="Load more"
+          />
+        )}
+
         {this.state.modalIsOpen && (
           <Modal
             closeModal={this.closeModal}
             modalData={this.state.modalData}
           />
         )}
-      </>
+      </div>
     );
   }
 }
